@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2935070930678518772}
   - component: {fileID: 2935070930678518771}
-  - component: {fileID: 2935070930678518770}
+  - component: {fileID: 7909726065132273631}
   - component: {fileID: 2935070930678518769}
   - component: {fileID: 2935070930678518773}
   m_Layer: 0
@@ -79,14 +79,14 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.45833334}
+  m_Size: {x: 1.3333334, y: 1.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &2935070930678518770
-CircleCollider2D:
+--- !u!61 &7909726065132273631
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,8 +99,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 0.45833334}
+    newSize: {x: 1.3333334, y: 1.125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Size: {x: 1, y: 1.125}
+  m_EdgeRadius: 0
 --- !u!50 &2935070930678518769
 Rigidbody2D:
   serializedVersion: 4
@@ -140,11 +150,17 @@ MonoBehaviour:
   sprites:
   - {fileID: -3876759189950653258, guid: 2a6adcf6cc61f79449039efda80ad915, type: 3}
   - {fileID: 5398807837072792716, guid: 2a6adcf6cc61f79449039efda80ad915, type: 3}
-  enemyScore: 100
+  enemyScore: 500
   BulletObjA: {fileID: 4630974091792814833, guid: 77f4257d42dc4bd49a60bea14ba849cf,
     type: 3}
   BulletObjB: {fileID: 6387147085489936844, guid: cfa40e36f8a3aa146aa7b2dbec0a2702,
     type: 3}
-  player: {fileID: 0}
-  maxShotDelay: 1
+  ItemObjBoom: {fileID: 3054376272840280864, guid: c5e2d10ada40aff478deb2ac49fa83ab,
+    type: 3}
+  ItemObjPower: {fileID: 8977424998526551594, guid: 508326bc522db4c48825e398fa9bc658,
+    type: 3}
+  ItemObjCoin: {fileID: 8832655265063074437, guid: 9f3b2c8d115285f4ba448154b4b929de,
+    type: 3}
+  maxShotDelay: 1.5
   curShotDelay: 0
+  player: {fileID: 0}

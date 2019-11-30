@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
 
     //GameManager UI Setting
     public Text scoreText;
+    public Text boomText;
     public Image[] lifeImg;
+    public Image boomImg;
     public GameObject gameOverSet;
 
     void Update()
@@ -37,6 +39,9 @@ public class GameManager : MonoBehaviour
         Player playerLogic = player.GetComponent<Player>();
         //{0:n0} == 999,999,999の,
         scoreText.text = string.Format("{0:n0}", playerLogic.score);
+
+        //UI Boom Update
+        boomText.text = playerLogic.boomCount.ToString();
     }
 
     void SpawnEnemy()
@@ -108,7 +113,7 @@ public class GameManager : MonoBehaviour
         gameOverSet.SetActive(true);
     }
 
-    //Game Re:Set
+    //Game ReSet
     public void GameRetry()
     {
         SceneManager.LoadScene(0);
