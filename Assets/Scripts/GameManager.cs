@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] enemyObjs;
+    public string[] enemyObjs;
     public Transform[] spawnPoints;
 
     //Spawn Delay Setting
@@ -21,6 +21,15 @@ public class GameManager : MonoBehaviour
     public Image[] lifeImg;
     public Image boomImg;
     public GameObject gameOverSet;
+
+    //Spawn Manager
+    public ObjManager objManager;
+
+
+    void Awake()
+    {
+        enemyObjs = new string[] { "EnemyL", "EnemyM", "EnemyS" };
+    }
 
     void Update()
     {
@@ -50,17 +59,19 @@ public class GameManager : MonoBehaviour
         int ranEnemy = Random.Range(0, 3);
         //Random Spawn Point
         int ranPoint = Random.Range(0, 9);
-        //Enemy Instance
-        GameObject enemy = Instantiate(enemyObjs[ranEnemy], 
-                                       spawnPoints[ranPoint].position,
-                                       spawnPoints[ranPoint].rotation);
+        //Enemy Spawn
+        GameObject enemy = objManager.MakeObj(enemyObjs[ranEnemy]);
+        enemy.transform.position = spawnPoints[ranPoint].position;
+
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
         //Player Attack Ready
         enemyLogic.player = player;
+        //ObjManager Ready
+        enemyLogic.objManager = objManager;
 
         //Enemy Move Logic
-        if(ranPoint == 6 || ranPoint == 8)          //Right Spawn
+        if (ranPoint == 6 || ranPoint == 8)          //Right Spawn
         {
             enemy.transform.Rotate(Vector3.forward * 90);
             rigid.velocity = new Vector2(enemyLogic.speed, -1);

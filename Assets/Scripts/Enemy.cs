@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     //Item
     public GameObject ItemObjBoom;
     public GameObject ItemObjPower;
+    public GameObject ItemObjSpeed;
     public GameObject ItemObjCoin;
 
     //Bullet Setting
@@ -28,11 +29,28 @@ public class Enemy : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
 
+    public ObjManager objManager;
     public GameObject player;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    void OnEnable()
+    {
+        switch (enemyName)
+        {
+            case "L":
+                health = 40;
+                break;
+            case "M":
+                health = 20;
+                break;
+            case "S":
+                health = 10;
+                break;
+        }
     }
 
     void Update()
@@ -49,22 +67,27 @@ public class Enemy : MonoBehaviour
 
        if(enemyName == "S")
         {
-            GameObject bullet = Instantiate(BulletObjA, transform.position, transform.rotation);
-            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+            GameObject bulletS = objManager.MakeObj("BulletEnemyA");
+            bulletS.transform.position = transform.position;
+            Rigidbody2D rigid = bulletS.GetComponent<Rigidbody2D>();
             Vector3 dirVec = player.transform.position - transform.position;
             rigid.AddForce(dirVec.normalized * 5, ForceMode2D.Impulse);
         }
        else if (enemyName == "M")
         {
-            GameObject bullet = Instantiate(BulletObjA, transform.position, transform.rotation);
-            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+            GameObject bulletM = objManager.MakeObj("BulletEnemyA");
+            bulletM.transform.position = transform.position;
+            Rigidbody2D rigid = bulletM.GetComponent<Rigidbody2D>();
             Vector3 dirVec = player.transform.position - transform.position;
             rigid.AddForce(dirVec.normalized * 5, ForceMode2D.Impulse);
         }
        else if(enemyName == "L")
         {
-            GameObject bulletR = Instantiate(BulletObjB, transform.position + Vector3.right * 0.35f + Vector3.down * 0.5f, transform.rotation);
-            GameObject bulletL = Instantiate(BulletObjB, transform.position + Vector3.left * 0.35f + Vector3.down * 0.5f, transform.rotation);
+            GameObject bulletR = objManager.MakeObj("BulletEnemyB");
+            GameObject bulletL = objManager.MakeObj("BulletEnemyB");
+
+            bulletR.transform.position = transform.position + Vector3.right * 0.35f + Vector3.down * 0.5f;
+            bulletL.transform.position = transform.position + Vector3.left * 0.35f + Vector3.down * 0.5f;
 
             Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
             Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
@@ -99,25 +122,34 @@ public class Enemy : MonoBehaviour
             playerLogic.score += enemyScore;
 
             //Random Ratio Item Drop
-            int ran = Random.Range(0, 10);
-            if(ran < 5)
+            int ran = Random.Range(0, 15);
+            if(ran < 9)
             {
                 Debug.Log("Not Item");
             }
-            else if(ran < 6) //Boom
+            else if(ran < 10) //Boom
             {
-                Instantiate(ItemObjBoom, transform.position, ItemObjBoom.transform.rotation);
+                GameObject itemBoom = objManager.MakeObj("ItemBoom");
+                itemBoom.transform.position = transform.position;
             }
-            else if (ran < 8) //Power
+            else if (ran < 11) //Power
             {
-                Instantiate(ItemObjPower, transform.position, ItemObjPower.transform.rotation);
+                GameObject itemPower = objManager.MakeObj("ItemPower");
+                itemPower.transform.position = transform.position;
             }
-            else if (ran < 10) //Coin
+            else if (ran < 12) //Speed
             {
-                Instantiate(ItemObjCoin, transform.position, ItemObjCoin.transform.rotation);
+                GameObject itemSpeed = objManager.MakeObj("ItemSpeed");
+                itemSpeed.transform.position = transform.position;
+            }
+            else if (ran < 15) //Coin
+            {
+                GameObject itemCoin = objManager.MakeObj("ItemCoin");
+                itemCoin.transform.position = transform.position;
             }
 
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            transform.rotation = Quaternion.identity;
         }
     }
 
@@ -129,13 +161,16 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "BorderBullet")
-            Destroy(gameObject);
+        {
+            gameObject.SetActive(false);
+            transform.rotation = Quaternion.identity;
+        }
         else if (collision.gameObject.tag == "PlayerBullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             OnHit(bullet.damage);
 
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
 
     }

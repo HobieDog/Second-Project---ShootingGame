@@ -159,6 +159,8 @@ MonoBehaviour:
     type: 3}
   ItemObjPower: {fileID: 8977424998526551594, guid: 508326bc522db4c48825e398fa9bc658,
     type: 3}
+  ItemObjSpeed: {fileID: 4485153036810007290, guid: cf090a34f80d25247b894794e21b0852,
+    type: 3}
   ItemObjCoin: {fileID: 8832655265063074437, guid: 9f3b2c8d115285f4ba448154b4b929de,
     type: 3}
   maxShotDelay: 1.5
