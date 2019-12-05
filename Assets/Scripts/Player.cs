@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public bool isTriggerLeft;
 
     //Player UI Setting
+    public int coin;
     public int score;
     public int life;
 
@@ -148,7 +149,8 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Border")
+        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
+        if (collision.gameObject.tag == "Border")
         {
             switch (collision.gameObject.name)
             {
@@ -219,6 +221,7 @@ public class Player : MonoBehaviour
                 case "Coin":
                     //いつかmoneyで変えてShopを追加する予定。
                     score += 1000;
+                    saveData.stageCoin += 1000;
                     break;
             }
             collision.gameObject.SetActive(false); ;

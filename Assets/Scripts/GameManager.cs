@@ -121,12 +121,20 @@ public class GameManager : MonoBehaviour
     //Player GameOver
     public void GameOver()
     {
+        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
+        saveData.SetCoin();
         gameOverSet.SetActive(true);
+    }
+
+    //Move Main
+    public void MoveMainScene()
+    {
+        SceneManager.LoadScene("Main");
     }
 
     //Game ReSet
     public void GameRetry()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Loading");
     }
 }
