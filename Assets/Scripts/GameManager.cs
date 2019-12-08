@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     public Transform[] spawnPoints;
 
     //Spawn Delay Setting
-    public float maxSpawnDelay;
+    public float nextSpawnDelay;
     public float curSpawnDelay;
 
     public GameObject player;
@@ -22,13 +23,54 @@ public class GameManager : MonoBehaviour
     public Image boomImg;
     public GameObject gameOverSet;
 
-    //Spawn Manager
+    //Object Manager
     public ObjManager objManager;
+
+    //Spawn
+    public List<Spawn> spawnList;
+    public int spawnIndex;
+    public bool spawnEnd;
 
 
     void Awake()
     {
-        enemyObjs = new string[] { "EnemyL", "EnemyM", "EnemyS" };
+        spawnList = new List<Spawn>();
+        enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL" };
+        ReadSpawnFile();
+    }
+
+    void ReadSpawnFile()
+    {
+        //Variable Initialization
+        spawnList.Clear();
+        spawnIndex = 0;
+        spawnEnd = false;
+
+        //ReSpawn File Read
+        TextAsset textFile = Resources.Load("Stage 0") as TextAsset;
+        StringReader stringReader = new StringReader(textFile.text);
+
+        while (stringReader != null)
+        {
+
+            string line = stringReader.ReadLine();
+
+            if (line == null)
+                break;
+
+            //ReSpawn Data construct
+            Spawn spawnData = new Spawn();
+            spawnData.delay = float.Parse(line.Split(',')[0]);
+            spawnData.type = line.Split(',')[1];
+            spawnData.point = int.Parse(line.Split(',')[2]);
+            spawnList.Add(spawnData);
+        }
+
+        //Text File Close
+        stringReader.Close();
+
+        //Spawn Delay Time
+        nextSpawnDelay = spawnList[0].delay;
     }
 
     void Update()
@@ -36,11 +78,9 @@ public class GameManager : MonoBehaviour
         //Spawn Delay
         curSpawnDelay += Time.deltaTime;
 
-        if(curSpawnDelay > maxSpawnDelay)
+        if(curSpawnDelay > nextSpawnDelay && !spawnEnd)
         {
             SpawnEnemy();
-            //Random Spawn Time
-            maxSpawnDelay = Random.Range(0.5f, 2.5f);
             curSpawnDelay = 0;
         }
 
@@ -55,13 +95,31 @@ public class GameManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        //Random Spawn Enemy
-        int ranEnemy = Random.Range(0, 3);
-        //Random Spawn Point
-        int ranPoint = Random.Range(0, 9);
+        //Spawn Enemy Type
+        int enemyIndex = 1;
+        switch (spawnList[spawnIndex].type)
+        {
+            case "S":
+                enemyIndex = 0;
+                break;
+            case "M":
+                enemyIndex = 1;
+                break;
+            case "L":
+                enemyIndex = 2;
+                break;
+        }
+
+        //Spawn Point
+        int enemyPoint = spawnList[spawnIndex].point;
+
         //Enemy Spawn
-        GameObject enemy = objManager.MakeObj(enemyObjs[ranEnemy]);
-        enemy.transform.position = spawnPoints[ranPoint].position;
+        Debug.Log(spawnList[spawnIndex].type);
+        Debug.Log(enemyIndex);
+     
+
+        GameObject enemy = objManager.MakeObj(enemyObjs[enemyIndex]);
+        enemy.transform.position = spawnPoints[enemyPoint].position;
 
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
@@ -71,12 +129,12 @@ public class GameManager : MonoBehaviour
         enemyLogic.objManager = objManager;
 
         //Enemy Move Logic
-        if (ranPoint == 6 || ranPoint == 8)          //Right Spawn
+        if (enemyPoint == 5 || enemyPoint == 7)          //Right Spawn
         {
             enemy.transform.Rotate(Vector3.forward * 90);
             rigid.velocity = new Vector2(enemyLogic.speed, -1);
         }
-        else if (ranPoint == 5 || ranPoint == 7)    //Left Spawn
+        else if (enemyPoint == 6 || enemyPoint == 8)    //Left Spawn
         {
             enemy.transform.Rotate(Vector3.back * 90);
             rigid.velocity = new Vector2(enemyLogic.speed * (-1), -1);
@@ -85,6 +143,17 @@ public class GameManager : MonoBehaviour
         {
             rigid.velocity = new Vector2(0, enemyLogic.speed * (-1));
         }
+
+        //ReSpawn Index on the rise
+        spawnIndex++;
+        if(spawnIndex == spawnList.Count)
+        {
+            spawnEnd = true;
+            return;
+        }
+
+        //Next ReSpawn Delay UpData
+        nextSpawnDelay = spawnList[spawnIndex].delay;
     }
 
     //Player Life
