@@ -40,14 +40,14 @@ public class ObjManager : MonoBehaviour
 
     void Awake()
     {
-        enemyL = new GameObject[10];
-        enemyM = new GameObject[10];
-        enemyS = new GameObject[10];
+        enemyL = new GameObject[20];
+        enemyM = new GameObject[20];
+        enemyS = new GameObject[20];
 
-        itemBoom = new GameObject[10];
-        itemPower = new GameObject[10];
-        itemSpeed = new GameObject[10];
-        itemCoin = new GameObject[20];
+        itemBoom = new GameObject[20];
+        itemPower = new GameObject[20];
+        itemSpeed = new GameObject[20];
+        itemCoin = new GameObject[40];
 
         bulletPlayerA = new GameObject[100];
         bulletPlayerB = new GameObject[100];

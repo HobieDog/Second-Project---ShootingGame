@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
+        maxPower += saveData.maxPower;
         anim = GetComponent<Animator>();
     }
 
@@ -89,55 +91,97 @@ public class Player : MonoBehaviour
             return;
 
         //Power Lever Bullet Style
-        switch (power)
+        if(power <= maxPower)
         {
-            case 1:
-                GameObject bullet = objManager.MakeObj("BulletPlayerA");
-                bullet.transform.position = transform.position;
-                Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-                rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                break;
-            case 2:
-                GameObject bulletR = objManager.MakeObj("BulletPlayerA");
-                GameObject bulletL = objManager.MakeObj("BulletPlayerA");
-                bulletR.transform.position = transform.position + Vector3.right * 0.1f;
-                bulletL.transform.position = transform.position + Vector3.left * 0.1f;
-                Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
-                rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                break;
-            case 3:
-                GameObject bulletB = objManager.MakeObj("BulletPlayerB");
-                bulletB.transform.position = transform.position;
-                Rigidbody2D rigidB = bulletB.GetComponent<Rigidbody2D>();
-                rigidB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                break;
-            case 4:
-                GameObject bulletBB = objManager.MakeObj("BulletPlayerB");
-                GameObject bulletC = objManager.MakeObj("BulletPlayerA");
-                bulletBB.transform.position = transform.position + Vector3.up * 0.3f;
-                bulletC.transform.position = transform.position;
-                Rigidbody2D rigidBB = bulletBB.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidC = bulletC.GetComponent<Rigidbody2D>();
-                rigidBB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                break;
-            case 5:
-                GameObject bulletBBB = objManager.MakeObj("BulletPlayerB");
-                GameObject bulletRR = objManager.MakeObj("BulletPlayerA");
-                GameObject bulletLL = objManager.MakeObj("BulletPlayerA");
-                bulletBBB.transform.position = transform.position + Vector3.up * 0.2f;
-                bulletRR.transform.position = transform.position + Vector3.right * 0.25f;
-                bulletLL.transform.position = transform.position + Vector3.left * 0.25f;
-                Rigidbody2D rigidBBB = bulletBBB.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>();
-                rigidBBB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
-                break;
+            switch (power)
+            {
+                case 1:
+                    GameObject bullet = objManager.MakeObj("BulletPlayerA");
+                    bullet.transform.position = transform.position;
+                    Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+                    rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 2:
+                    GameObject bulletR = objManager.MakeObj("BulletPlayerA");
+                    GameObject bulletL = objManager.MakeObj("BulletPlayerA");
+                    bulletR.transform.position = transform.position + Vector3.right * 0.1f;
+                    bulletL.transform.position = transform.position + Vector3.left * 0.1f;
+                    Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
+                    rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 3:
+                    GameObject bulletB = objManager.MakeObj("BulletPlayerB");
+                    bulletB.transform.position = transform.position;
+                    Rigidbody2D rigidB = bulletB.GetComponent<Rigidbody2D>();
+                    rigidB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 4:
+                    GameObject bulletBB = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletC = objManager.MakeObj("BulletPlayerA");
+                    bulletBB.transform.position = transform.position + Vector3.up * 0.3f;
+                    bulletC.transform.position = transform.position;
+                    Rigidbody2D rigidBB = bulletBB.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidC = bulletC.GetComponent<Rigidbody2D>();
+                    rigidBB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 5:
+                    GameObject bulletBBB = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletRR = objManager.MakeObj("BulletPlayerA");
+                    GameObject bulletLL = objManager.MakeObj("BulletPlayerA");
+                    bulletBBB.transform.position = transform.position + Vector3.up * 0.2f;
+                    bulletRR.transform.position = transform.position + Vector3.right * 0.25f;
+                    bulletLL.transform.position = transform.position + Vector3.left * 0.25f;
+                    Rigidbody2D rigidBBB = bulletBBB.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>();
+                    rigidBBB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 6:
+                    GameObject bulletBR = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletBL = objManager.MakeObj("BulletPlayerB");
+                    bulletBR.transform.position = transform.position + Vector3.right * 0.25f;
+                    bulletBL.transform.position = transform.position + Vector3.left * 0.25f;
+                    Rigidbody2D rigidBR = bulletBR.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidBL = bulletBL.GetComponent<Rigidbody2D>();
+                    rigidBR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidBL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 7:
+                    GameObject bulletBBR = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletBBL = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletS = objManager.MakeObj("BulletPlayerA");
+                    bulletBBR.transform.position = transform.position + Vector3.right * 0.25f + Vector3.up * 0.1f;
+                    bulletBBL.transform.position = transform.position + Vector3.left * 0.25f + Vector3.up * 0.1f;
+                    bulletS.transform.position = transform.position + Vector3.down * 0.1f;
+                    Rigidbody2D rigidBBR = bulletBBR.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidBBL = bulletBBL.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidS = bulletS.GetComponent<Rigidbody2D>();
+                    rigidBBR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidBBL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidS.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+                case 8:
+                    GameObject bulletBBBR = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletBBBL = objManager.MakeObj("BulletPlayerB");
+                    GameObject bulletBS = objManager.MakeObj("BulletPlayerA");
+                    bulletBBBR.transform.position = transform.position + Vector3.right * 0.25f + Vector3.up * 0.1f;
+                    bulletBBBL.transform.position = transform.position + Vector3.left * 0.25f + Vector3.up * 0.1f;
+                    bulletBS.transform.position = transform.position + Vector3.down * 0.1f;
+                    Rigidbody2D rigidBBBR = bulletBBBR.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidBBBL = bulletBBBL.GetComponent<Rigidbody2D>();
+                    Rigidbody2D rigidBS = bulletBS.GetComponent<Rigidbody2D>();
+                    rigidBBBR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidBBBL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    rigidBS.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                    break;
+            }
         }
+        
         
         curShotDelay = 0;
     }
@@ -221,7 +265,7 @@ public class Player : MonoBehaviour
                 case "Coin":
                     //いつかmoneyで変えてShopを追加する予定。
                     score += 1000;
-                    saveData.stageCoin += 1000;
+                    saveData.totalCoin += 100;
                     break;
             }
             collision.gameObject.SetActive(false); ;

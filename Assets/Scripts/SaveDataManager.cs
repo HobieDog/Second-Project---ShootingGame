@@ -9,8 +9,10 @@ public class SaveDataManager : MonoBehaviour
     public static SaveDataManager instance;
 
     //Set Coin
-    public int stageCoin;
     public int totalCoin;
+
+    //Set Store Item Effect
+    public int maxPower;
 
     void Awake()
     {
@@ -21,11 +23,5 @@ public class SaveDataManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(this);
-    }
-
-    public void SetCoin()
-    {
-        totalCoin += stageCoin;
-        stageCoin = 0;
     }
 }
