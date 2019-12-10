@@ -13,6 +13,11 @@ public class StoreSlot : MonoBehaviour
     public Text itemPrice;
     public Button buyBtn;
 
+    public void onBuyBtn()
+    {
+        buyBtn.interactable = true;
+    }
+
     public void offBuyBtn()
     {
         buyBtn.interactable = false;

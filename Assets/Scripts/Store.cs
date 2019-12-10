@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class Store : MonoBehaviour
 {
@@ -9,10 +10,18 @@ public class Store : MonoBehaviour
     public Transform slotRoot;
 
     private List<StoreSlot> slots;
+    private List<ItemPrice> itemPrices;
+
+    void Awake()
+    {
+        slots = new List<StoreSlot>();
+        itemPrices = new List<ItemPrice>();
+        ReadItemPriceFile();
+    }
 
     public void Start()
     {
-        slots = new List<StoreSlot>();
+        
         int slotCnt = slotRoot.childCount;
 
         for (int i = 0; i < slotCnt; i++)
@@ -28,49 +37,69 @@ public class Store : MonoBehaviour
         }
     }
 
+    public void ReadItemPriceFile()
+    {
+        //Variable Initialization
+        itemPrices.Clear();
+
+        //Item Price File Read
+        TextAsset textFile = Resources.Load("ItemPrice") as TextAsset;
+        StringReader stringReader = new StringReader(textFile.text);
+
+        while (stringReader != null)
+        {
+
+            string line = stringReader.ReadLine();
+
+            if (line == null)
+                break;
+
+            //Item Price Data construct
+            ItemPrice itemPriceData = new ItemPrice();
+            itemPriceData.itemIndex = int.Parse(line.Split(',')[0]);
+            itemPriceData.upgradeIndex = int.Parse(line.Split(',')[1]);
+            itemPriceData.itemPrice = int.Parse(line.Split(',')[2]);
+            itemPrices.Add(itemPriceData);
+        }
+
+        //Text File Close
+        stringReader.Close();
+    }
+
     public void PriceUp(int itemIndex)
     {
         SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
         var slot = slotRoot.GetChild(itemIndex).GetComponent<StoreSlot>();
 
-        switch (itemIndex)
+        if (saveData.totalCoin >= itemBuffer.items[itemIndex].itemPrice)
         {
-            case 0:
-                if (saveData.totalCoin >= itemBuffer.items[itemIndex].itemPrice && itemBuffer.items[itemIndex].itemUpgradeIndex <= 5)
-                {
-                    saveData.totalCoin -= itemBuffer.items[itemIndex].itemPrice;
-                    itemBuffer.items[itemIndex].itemPrice += 500;
-                    itemBuffer.items[itemIndex].itemUpgradeIndex++;
+            slot.onBuyBtn();
+            saveData.totalCoin -= itemBuffer.items[itemIndex].itemPrice;
+
+            itemBuffer.items[itemIndex].itemUpgradeIndex++;
+
+            ItemPrice findItemIndex = itemPrices.Find(x => (x.itemIndex == itemIndex) && (x.upgradeIndex == itemBuffer.items[itemIndex].itemUpgradeIndex));
+            if (findItemIndex.itemPrice != 0)
+                itemBuffer.items[itemIndex].itemPrice = findItemIndex.itemPrice;
+            else
+                slot.offBuyBtn();
+            
+            slot.SetItem(itemBuffer.items[itemIndex]);
+
+            switch (itemIndex)
+            {
+                case 0:
                     saveData.maxPower++;
-                    slot.SetItem(itemBuffer.items[itemIndex]);
-                }
-                else
-                    slot.offBuyBtn();
-                break;
-            case 1:
-                if (saveData.totalCoin >= itemBuffer.items[itemIndex].itemPrice && itemBuffer.items[itemIndex].itemUpgradeIndex <= 1)
-                {
-                    saveData.totalCoin -= itemBuffer.items[itemIndex].itemPrice;
-                    itemBuffer.items[itemIndex].itemPrice += 500;
-                    itemBuffer.items[itemIndex].itemUpgradeIndex++;
-                    saveData.maxPower++;
-                    slot.SetItem(itemBuffer.items[itemIndex]);
-                }
-                else
-                    slot.offBuyBtn();
-                break;
-            case 2:
-                if (saveData.totalCoin >= itemBuffer.items[itemIndex].itemPrice && itemBuffer.items[itemIndex].itemUpgradeIndex <= 1)
-                {
-                    saveData.totalCoin -= itemBuffer.items[itemIndex].itemPrice;
-                    itemBuffer.items[itemIndex].itemPrice += 500;
-                    itemBuffer.items[itemIndex].itemUpgradeIndex++;
-                    saveData.maxPower++;
-                    slot.SetItem(itemBuffer.items[itemIndex]);
-                }
-                else
-                    slot.offBuyBtn();
-                break;
+                    break;
+                case 1:
+                    saveData.maxPower++; //미구현
+                    break;
+                case 2:
+                    saveData.maxPower++; //미구현
+                    break;
+            }
         }
+        else
+            slot.offBuyBtn();
     }
 }
