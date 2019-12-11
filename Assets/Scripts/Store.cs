@@ -21,11 +21,7 @@ public class Store : MonoBehaviour
 
     public void Start()
     {
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 3effc48cd356ac323318c85594b6297a51b292c5
         int slotCnt = slotRoot.childCount;
 
         for (int i = 0; i < slotCnt; i++)
@@ -87,11 +83,7 @@ public class Store : MonoBehaviour
                 itemBuffer.items[itemIndex].itemPrice = findItemIndex.itemPrice;
             else
                 slot.offBuyBtn();
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 3effc48cd356ac323318c85594b6297a51b292c5
             slot.SetItem(itemBuffer.items[itemIndex]);
 
             switch (itemIndex)
@@ -100,11 +92,7 @@ public class Store : MonoBehaviour
                     saveData.maxPower++;
                     break;
                 case 1:
-<<<<<<< HEAD
                     saveData.AddFollowers(itemBuffer.items[itemIndex].itemUpgradeIndex); //미구현
-=======
-                    saveData.maxPower++; //미구현
->>>>>>> 3effc48cd356ac323318c85594b6297a51b292c5
                     break;
                 case 2:
                     saveData.maxPower++; //미구현
@@ -114,8 +102,4 @@ public class Store : MonoBehaviour
         else
             slot.offBuyBtn();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3effc48cd356ac323318c85594b6297a51b292c5
