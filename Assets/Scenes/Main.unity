@@ -355,6 +355,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalCoin: 1000000
   maxPower: 0
+  powerUpgradeIndex: 0
+  followersUpgradeIndex: 0
+  followers: 
 --- !u!4 &154381299
 Transform:
   m_ObjectHideFlags: 0

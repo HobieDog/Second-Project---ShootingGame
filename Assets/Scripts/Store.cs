@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.IO;
 
 public class Store : MonoBehaviour
@@ -21,6 +20,9 @@ public class Store : MonoBehaviour
 
     public void Start()
     {
+        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
+        itemBuffer.items[0].itemUpgradeIndex = saveData.powerUpgradeIndex;
+        itemBuffer.items[1].itemUpgradeIndex = saveData.followersUpgradeIndex;
 
         int slotCnt = slotRoot.childCount;
 
@@ -30,6 +32,15 @@ public class Store : MonoBehaviour
 
             if (i < itemBuffer.items.Count)
             {
+                ItemPrice findItemIndex = itemPrices.Find(x => (x.itemIndex == i) && (x.upgradeIndex == itemBuffer.items[i].itemUpgradeIndex));
+                if (findItemIndex.itemPrice != 0)
+                    itemBuffer.items[i].itemPrice = findItemIndex.itemPrice;
+                else
+                {
+                    itemBuffer.items[i].itemPrice = 0;
+                    slot.offBuyBtn();
+                }
+                    
                 slot.SetItem(itemBuffer.items[i]);
             }
 
@@ -82,7 +93,10 @@ public class Store : MonoBehaviour
             if (findItemIndex.itemPrice != 0)
                 itemBuffer.items[itemIndex].itemPrice = findItemIndex.itemPrice;
             else
+            {
+                itemBuffer.items[itemIndex].itemPrice = 0;
                 slot.offBuyBtn();
+            }
 
             slot.SetItem(itemBuffer.items[itemIndex]);
 
@@ -90,9 +104,11 @@ public class Store : MonoBehaviour
             {
                 case 0:
                     saveData.maxPower++;
+                    saveData.powerUpgradeIndex++;
                     break;
                 case 1:
-                    saveData.AddFollowers(itemBuffer.items[itemIndex].itemUpgradeIndex); //미구현
+                    saveData.AddFollowers(itemBuffer.items[itemIndex].itemUpgradeIndex);
+                    saveData.followersUpgradeIndex++;
                     break;
                 case 2:
                     saveData.maxPower++; //미구현

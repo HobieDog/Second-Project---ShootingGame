@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 
 
@@ -14,6 +13,8 @@ public class SaveDataManager : MonoBehaviour
 
     //Set Store Item Effect
     public int maxPower;
+    public int powerUpgradeIndex;
+    public int followersUpgradeIndex;
     public int[] followers;
 
     void Awake()
