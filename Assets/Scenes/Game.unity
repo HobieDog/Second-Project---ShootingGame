@@ -1884,8 +1884,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   maxSpeed: 0
-  power: 5
-  maxPower: 5
+  power: 1
+  maxPower: 3
   isTriggerTop: 0
   isTriggerBottom: 0
   isTriggerRight: 0

@@ -14,6 +14,7 @@ public class SaveDataManager : MonoBehaviour
 
     //Set Store Item Effect
     public int maxPower;
+<<<<<<< HEAD
     public int[] followers;
 
     void Awake()
@@ -26,9 +27,13 @@ public class SaveDataManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this);
     }
+<<<<<<< HEAD
 
     public void AddFollowers(int Index)
     {
         Array.Resize<int>(ref followers, Index);
     }
 }
+=======
+}
+>>>>>>> 3effc48cd356ac323318c85594b6297a51b292c5
