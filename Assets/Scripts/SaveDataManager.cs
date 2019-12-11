@@ -16,8 +16,6 @@ public class SaveDataManager : MonoBehaviour
     public int maxPower;
 <<<<<<< HEAD
     public int[] followers;
-=======
->>>>>>> 3effc48cd356ac323318c85594b6297a51b292c5
 
     void Awake()
     {
