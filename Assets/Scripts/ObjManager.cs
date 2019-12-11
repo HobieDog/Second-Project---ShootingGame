@@ -17,6 +17,7 @@ public class ObjManager : MonoBehaviour
     public GameObject bulletPlayerBPrefab;
     public GameObject bulletEnemyAPrefab;
     public GameObject bulletEnemyBPrefab;
+    public GameObject bulletFollowerPrefab;
 
     //Enemy Type
     GameObject[] enemyL;
@@ -34,25 +35,27 @@ public class ObjManager : MonoBehaviour
     GameObject[] bulletPlayerB;
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
+    GameObject[] bulletFollower;
 
     //MakeObj
     GameObject[] targetPool;
 
     void Awake()
     {
-        enemyL = new GameObject[10];
-        enemyM = new GameObject[10];
-        enemyS = new GameObject[10];
+        enemyL = new GameObject[20];
+        enemyM = new GameObject[20];
+        enemyS = new GameObject[20];
 
-        itemBoom = new GameObject[10];
-        itemPower = new GameObject[10];
-        itemSpeed = new GameObject[10];
-        itemCoin = new GameObject[20];
+        itemBoom = new GameObject[20];
+        itemPower = new GameObject[20];
+        itemSpeed = new GameObject[20];
+        itemCoin = new GameObject[40];
 
-        bulletPlayerA = new GameObject[100];
-        bulletPlayerB = new GameObject[100];
-        bulletEnemyA = new GameObject[100];
-        bulletEnemyB = new GameObject[100];
+        bulletPlayerA = new GameObject[150];
+        bulletPlayerB = new GameObject[150];
+        bulletEnemyA = new GameObject[150];
+        bulletEnemyB = new GameObject[150];
+        bulletFollower = new GameObject[150];
 
         Generate();
     }
@@ -119,6 +122,11 @@ public class ObjManager : MonoBehaviour
             bulletEnemyB[i] = Instantiate(bulletEnemyBPrefab);
             bulletEnemyB[i].SetActive(false);
         }
+        for (int i = 0; i < bulletFollower.Length; i++)
+        {
+            bulletFollower[i] = Instantiate(bulletFollowerPrefab);
+            bulletFollower[i].SetActive(false);
+        }
     }
 
     public GameObject MakeObj(string type)
@@ -162,6 +170,9 @@ public class ObjManager : MonoBehaviour
                 break;
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
+                break;
+            case "bulletFollower":
+                targetPool = bulletFollower;
                 break;
         }
 
@@ -219,6 +230,9 @@ public class ObjManager : MonoBehaviour
                 break;
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
+                break;
+            case "bulletFollower":
+                targetPool = bulletFollower;
                 break;
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 
 public class SaveDataManager : MonoBehaviour
@@ -9,12 +10,15 @@ public class SaveDataManager : MonoBehaviour
     public static SaveDataManager instance;
 
     //Set Coin
-    public int stageCoin;
     public int totalCoin;
+
+    //Set Store Item Effect
+    public int maxPower;
+    public int[] followers;
 
     void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(this.gameObject);
             return;
@@ -23,9 +27,8 @@ public class SaveDataManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void SetCoin()
+    public void AddFollowers(int Index)
     {
-        totalCoin += stageCoin;
-        stageCoin = 0;
+        Array.Resize<int>(ref followers, Index);
     }
 }

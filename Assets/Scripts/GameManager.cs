@@ -114,10 +114,6 @@ public class GameManager : MonoBehaviour
         int enemyPoint = spawnList[spawnIndex].point;
 
         //Enemy Spawn
-        Debug.Log(spawnList[spawnIndex].type);
-        Debug.Log(enemyIndex);
-     
-
         GameObject enemy = objManager.MakeObj(enemyObjs[enemyIndex]);
         enemy.transform.position = spawnPoints[enemyPoint].position;
 
@@ -191,7 +187,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
-        saveData.SetCoin();
         gameOverSet.SetActive(true);
     }
 
