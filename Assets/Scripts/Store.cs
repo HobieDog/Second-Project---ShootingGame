@@ -103,15 +103,13 @@ public class Store : MonoBehaviour
             switch (itemIndex)
             {
                 case 0:
-                    saveData.maxPower++;
                     saveData.powerUpgradeIndex++;
                     break;
                 case 1:
                     saveData.AddFollowers(itemBuffer.items[itemIndex].itemUpgradeIndex);
                     saveData.followersUpgradeIndex++;
                     break;
-                case 2:
-                    saveData.maxPower++; //미구현
+                case 2: //미구현
                     break;
             }
         }

@@ -45,16 +45,22 @@ public class Player : MonoBehaviour
     //Followers Setting
     public GameObject[] followers;
 
+    //Joystick Setting
+    protected Joystick joystick;
+    protected JoystickBtn boomBtn;
+
     Animator anim;
 
     void Awake()
     {
         SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
-        maxPower += saveData.maxPower;
+        maxPower += saveData.powerUpgradeIndex;
         for(int i = 0; i < saveData.followers.Length; i++)
         {
             followers[i].SetActive(true);
         }
+        joystick = FindObjectOfType<Joystick>();
+        boomBtn = FindObjectOfType<JoystickBtn>();
         anim = GetComponent<Animator>();
     }
 
@@ -68,12 +74,14 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        if ((isTriggerRight && h == 1) || (isTriggerLeft && h == -1))
+        float h = joystick.Horizontal + Input.GetAxis("Horizontal");
+        Debug.Log(joystick.Horizontal);
+        Debug.Log(h);
+        if ((isTriggerRight &&  Mathf.Round(h) == 1) || (isTriggerLeft && Mathf.Round(h) == -1))
             h = 0;
 
-        float v = Input.GetAxisRaw("Vertical");
-        if ((isTriggerTop && v == 1) || (isTriggerBottom && v == -1))
+        float v = joystick.Vertical + Input.GetAxis("Vertical");
+        if ((isTriggerTop && Mathf.Round(v) == 1) || (isTriggerBottom && Mathf.Round(v) == -1))
             v = 0;
 
         Vector3 curPos = transform.position;
@@ -82,17 +90,20 @@ public class Player : MonoBehaviour
         transform.position = curPos + nextPos;
 
         //Move Animation
-        if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
+        if (true)
         {
+            if (0 > h)
+                h = -1;
+            else if(0 < h)
+            {
+                h = 1;
+            }
             anim.SetInteger("Input", (int)h);
         }
     }
 
     void Launch()
     { 
-        if (!Input.GetButton("Jump"))
-            return;
-
         //Reload Delay Time
         if (curShotDelay < maxShotDelay)
             return;
@@ -196,7 +207,6 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
         if (collision.gameObject.tag == "Border")
         {
             switch (collision.gameObject.name)
@@ -244,7 +254,7 @@ public class Player : MonoBehaviour
         else if(collision.gameObject.tag == "Item")
         {
             Item item = collision.gameObject.GetComponent<Item>();
-
+            SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
             switch (item.type)
             {
                 case "Boom":
@@ -276,7 +286,7 @@ public class Player : MonoBehaviour
 
     void OnBoomEffect()
     {
-        if (!Input.GetButton("Fire1"))
+        if (!Input.GetButton("Fire1") || !boomBtn.pressed)
             return;
 
         if (isBoomTime)
