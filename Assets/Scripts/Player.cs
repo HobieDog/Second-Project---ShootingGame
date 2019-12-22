@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     //Boom
     public int boomCount;
     public int maxBoom;
+    public int boomDamage;
     public GameObject BoomEffect;
     public bool isBoomTime;
 
@@ -64,6 +65,7 @@ public class Player : MonoBehaviour
         {
             followers[i].SetActive(true);
         }
+        boomDamage = (saveData.boomDamageUpgradeIndex + 1) * 30;
         anim = GetComponent<Animator>();
     }
 
@@ -312,7 +314,7 @@ public class Player : MonoBehaviour
             if (enemiesL[i].activeSelf)
             {
                 Enemy enemyLogic = enemiesL[i].GetComponent<Enemy>();
-                enemyLogic.OnHit(300);
+                enemyLogic.OnHit(boomDamage);
             }
         }
 

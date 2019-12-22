@@ -14,6 +14,7 @@ public class SaveDataManager : MonoBehaviour
     //Set Store Item Effect
     public int powerUpgradeIndex;
     public int followersUpgradeIndex;
+    public int boomDamageUpgradeIndex;
     public int[] followers;
 
     void Awake()

@@ -111,7 +111,8 @@ public class Store : MonoBehaviour
                     saveData.AddFollowers(itemBuffer.items[itemIndex].itemUpgradeIndex);
                     saveData.followersUpgradeIndex++;
                     break;
-                case 2: //미구현
+                case 2:
+                    saveData.boomDamageUpgradeIndex++;
                     break;
             }
         }

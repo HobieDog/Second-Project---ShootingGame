@@ -7,7 +7,6 @@ public class ItemList
 {
     public string itemName;
     public int itemUpgradeIndex;
-    public int maxitemUpgradeIndex;
     public int itemPrice;
     public Sprite sprite;
 }

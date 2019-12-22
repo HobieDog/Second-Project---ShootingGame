@@ -150,7 +150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinText: {fileID: 1375288231}
-  saveData: {fileID: 154381298}
   storeUI: {fileID: 351528975}
 --- !u!4 &30242994
 Transform:
@@ -354,9 +353,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalCoin: 1000000
-  maxPower: 0
   powerUpgradeIndex: 0
   followersUpgradeIndex: 0
+  boomDamageUpgradeIndex: 0
   followers: 
 --- !u!4 &154381299
 Transform:
@@ -1253,20 +1252,17 @@ MonoBehaviour:
   items:
   - itemName: Power Up
     itemUpgradeIndex: 0
-    maxitemUpgradeIndex: 0
     itemPrice: 500
     sprite: {fileID: 3843638439612713876, guid: 6322967e3dfa7464795e4cb320be607d,
       type: 3}
   - itemName: Follow Up
     itemUpgradeIndex: 0
-    maxitemUpgradeIndex: 0
     itemPrice: 10000
     sprite: {fileID: 21300000, guid: 7c1cca57287ea2d43af80c71caac2c93, type: 3}
-  - itemName: no
+  - itemName: Boom Up
     itemUpgradeIndex: 0
-    maxitemUpgradeIndex: 0
-    itemPrice: 10000
-    sprite: {fileID: 1802310193581816292, guid: 939a4a9272eeb8d4ab8ed65511af0c6e,
+    itemPrice: 1000
+    sprite: {fileID: -3674220794827857860, guid: e2888155d636ba04cb0f28e169f5ccef,
       type: 3}
 --- !u!4 &547827063
 Transform:
@@ -1317,7 +1313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 5.4999847, y: -32}
+  m_AnchoredPosition: {x: 5.5, y: -32}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &587095784
@@ -1626,7 +1622,6 @@ MonoBehaviour:
   itemList:
     itemName: 
     itemUpgradeIndex: 0
-    maxitemUpgradeIndex: 0
     itemPrice: 0
     sprite: {fileID: 0}
   img: {fileID: 378000223}
@@ -2409,7 +2404,6 @@ MonoBehaviour:
   itemList:
     itemName: 
     itemUpgradeIndex: 0
-    maxitemUpgradeIndex: 0
     itemPrice: 0
     sprite: {fileID: 0}
   img: {fileID: 2146222739}
@@ -2914,7 +2908,6 @@ MonoBehaviour:
   itemList:
     itemName: 
     itemUpgradeIndex: 0
-    maxitemUpgradeIndex: 0
     itemPrice: 0
     sprite: {fileID: 0}
   img: {fileID: 1522370989}
