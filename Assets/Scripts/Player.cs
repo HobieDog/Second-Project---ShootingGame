@@ -251,7 +251,6 @@ public class Player : MonoBehaviour
 
             
             gameObject.SetActive(false);
-            collision.gameObject.SetActive(false);
         }
 
         else if(collision.gameObject.tag == "Item")
@@ -305,9 +304,19 @@ public class Player : MonoBehaviour
         Invoke("OffBoomEffect", 3.5f);
 
         //Remove Enemy
+        GameObject[] boss = objManager.GetPool("Boss");
         GameObject[] enemiesL = objManager.GetPool("EnemyL");
         GameObject[] enemiesM = objManager.GetPool("EnemyM");
         GameObject[] enemiesS = objManager.GetPool("EnemyS");
+        
+        for (int i = 0; i < boss.Length; i++)
+        {
+            if (boss[i].activeSelf)
+            {
+                Enemy enemyLogic = boss[i].GetComponent<Enemy>();
+                enemyLogic.OnHit(boomDamage * 4);
+            }
+        }
 
         for (int i = 0; i < enemiesL.Length; i++)
         {
@@ -323,7 +332,7 @@ public class Player : MonoBehaviour
             if (enemiesM[i].activeSelf)
             {
                 Enemy enemyLogic = enemiesM[i].GetComponent<Enemy>();
-                enemyLogic.OnHit(300);
+                enemyLogic.OnHit(boomDamage);
             }
         }
 
@@ -332,7 +341,7 @@ public class Player : MonoBehaviour
             if (enemiesS[i].activeSelf)
             {
                 Enemy enemyLogic = enemiesS[i].GetComponent<Enemy>();
-                enemyLogic.OnHit(300);
+                enemyLogic.OnHit(boomDamage);
             }
         }
 
