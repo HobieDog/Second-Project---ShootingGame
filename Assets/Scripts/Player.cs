@@ -75,8 +75,6 @@ public class Player : MonoBehaviour
     void Move()
     {
         float h = joystick.Horizontal + Input.GetAxis("Horizontal");
-        Debug.Log(joystick.Horizontal);
-        Debug.Log(h);
         if ((isTriggerRight &&  Mathf.Round(h) == 1) || (isTriggerLeft && Mathf.Round(h) == -1))
             h = 0;
 

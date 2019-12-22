@@ -4012,6 +4012,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fef875bd1707d442953baca2c5fc246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossPrefab: {fileID: 3731600880729723760, guid: 9863ee93ccd3eed4bbe835d108567593,
+    type: 3}
   enemyLPrefab: {fileID: 5523911886451716364, guid: e73ee5cccad12a542a0cc52002ca94cd,
     type: 3}
   enemyMPrefab: {fileID: 6280202874569575453, guid: 7f55210441875fc4fae631ebb3297f9b,
@@ -4033,6 +4035,10 @@ MonoBehaviour:
   bulletEnemyAPrefab: {fileID: 4630974091792814833, guid: 77f4257d42dc4bd49a60bea14ba849cf,
     type: 3}
   bulletEnemyBPrefab: {fileID: 6387147085489936844, guid: cfa40e36f8a3aa146aa7b2dbec0a2702,
+    type: 3}
+  bulletBossAPrefab: {fileID: 6387147085489936844, guid: a9f323fb91c5b734abc0775945b15c72,
+    type: 3}
+  bulletBossBPrefab: {fileID: 6387147085489936844, guid: 0afd3f85cf6282f4bb1be42a82b882d3,
     type: 3}
   bulletFollowerPrefab: {fileID: 4630974091792814833, guid: 9a00dc9db5b6e8a4c8f2f11e136608ce,
     type: 3}
