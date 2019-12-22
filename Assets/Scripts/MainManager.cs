@@ -8,12 +8,14 @@ public class MainManager : MonoBehaviour
 {
     //Main UI Setting
     public Text coinText;
-    public SaveDataManager saveData;
     public GameObject storeUI;
+
+    //DontDestroyOnLoad Data
+    protected SaveDataManager saveData;
 
     void Awake()
     {
-        saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
+        saveData = FindObjectOfType<SaveDataManager>();
         storeUI.SetActive(false);
     }
 

@@ -49,18 +49,21 @@ public class Player : MonoBehaviour
     protected Joystick joystick;
     protected JoystickBtn boomBtn;
 
+    //DontDestroyOnLoad Data
+    protected SaveDataManager saveData;
+
     Animator anim;
 
     void Awake()
     {
-        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
+        joystick = FindObjectOfType<Joystick>();
+        boomBtn = FindObjectOfType<JoystickBtn>();
+        saveData = FindObjectOfType<SaveDataManager>();
         maxPower += saveData.powerUpgradeIndex;
         for(int i = 0; i < saveData.followers.Length; i++)
         {
             followers[i].SetActive(true);
         }
-        joystick = FindObjectOfType<Joystick>();
-        boomBtn = FindObjectOfType<JoystickBtn>();
         anim = GetComponent<Animator>();
     }
 
@@ -252,7 +255,6 @@ public class Player : MonoBehaviour
         else if(collision.gameObject.tag == "Item")
         {
             Item item = collision.gameObject.GetComponent<Item>();
-            SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
             switch (item.type)
             {
                 case "Boom":

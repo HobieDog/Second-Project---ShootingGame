@@ -11,8 +11,12 @@ public class Store : MonoBehaviour
     private List<StoreSlot> slots;
     private List<ItemPrice> itemPrices;
 
+    //DontDestroyOnLoad Data
+    protected SaveDataManager saveData;
+
     void Awake()
     {
+        saveData = FindObjectOfType<SaveDataManager>();
         slots = new List<StoreSlot>();
         itemPrices = new List<ItemPrice>();
         ReadItemPriceFile();
@@ -20,7 +24,6 @@ public class Store : MonoBehaviour
 
     public void Start()
     {
-        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
         itemBuffer.items[0].itemUpgradeIndex = saveData.powerUpgradeIndex;
         itemBuffer.items[1].itemUpgradeIndex = saveData.followersUpgradeIndex;
 
@@ -79,7 +82,6 @@ public class Store : MonoBehaviour
 
     public void PriceUp(int itemIndex)
     {
-        SaveDataManager saveData = GameObject.Find("SaveDataManager").GetComponent<SaveDataManager>();
         var slot = slotRoot.GetChild(itemIndex).GetComponent<StoreSlot>();
 
         if (saveData.totalCoin >= itemBuffer.items[itemIndex].itemPrice)
