@@ -2093,6 +2093,7 @@ MonoBehaviour:
     type: 3}
   boomCount: 0
   maxBoom: 99
+  boomDamage: 0
   BoomEffect: {fileID: 1752416162}
   isBoomTime: 0
   maxShotDelay: 0.15

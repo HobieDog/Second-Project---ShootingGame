@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public int power;
     public int maxPower;
+    public bool isRespawnTime;     //Player Unbeatable Time
 
     //Border Player
     public bool isTriggerTop;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
     protected SaveDataManager saveData;
 
     Animator anim;
+    SpriteRenderer spriteRenderer;
 
     void Awake()
     {
@@ -67,6 +69,30 @@ public class Player : MonoBehaviour
         }
         boomDamage = (saveData.boomDamageUpgradeIndex + 1) * 30;
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    //Player Unbeatable Time
+    void OnEnable()
+    {
+        Unbeatable();
+        Invoke("Unbeatable", 2);
+    }
+
+    void Unbeatable()
+    {
+        isRespawnTime = !isRespawnTime;
+
+        if (isRespawnTime)  //Unbeatable Time
+        {
+            isRespawnTime = true;
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        }
+        else                //beatable Time
+        {
+            isRespawnTime = false;
+            spriteRenderer.color = new Color(1, 1, 1, 1);
+        }
     }
 
     void Update()
@@ -231,6 +257,10 @@ public class Player : MonoBehaviour
 
         else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
+            //Player Unbeatable Time
+            if (isRespawnTime)
+                return;
+
             //Player Life Update
             if (isHit)
                 return;
