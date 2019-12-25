@@ -29,8 +29,9 @@ public class Enemy : MonoBehaviour
 
     //Manager Setting
     public ObjManager objManager;
-    public GameObject player;
+    public GameManager gameManager;
 
+    public GameObject player;
     SpriteRenderer spriteRenderer;
     Animator anim;
 
@@ -322,6 +323,7 @@ public class Enemy : MonoBehaviour
 
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
+            gameManager.CallExplosion(transform.position, enemyName);
         }
     }
 

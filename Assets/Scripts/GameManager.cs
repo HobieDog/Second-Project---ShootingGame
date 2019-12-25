@@ -124,8 +124,9 @@ public class GameManager : MonoBehaviour
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
         //Player Attack Ready
         enemyLogic.player = player;
-        //ObjManager Ready
+        //Managers Ready
         enemyLogic.objManager = objManager;
+        enemyLogic.gameManager = this;
 
         //Enemy Move Logic
         if (enemyPoint == 5 || enemyPoint == 7)          //Right Spawn
@@ -184,6 +185,16 @@ public class GameManager : MonoBehaviour
 
         Player playerLogic = player.GetComponent<Player>();
         playerLogic.isHit = false;
+    }
+
+    //Explosion
+    public void CallExplosion(Vector3 pos, string type)
+    {
+        GameObject explosion = objManager.MakeObj("Explosion");
+        Explosion explosionLogic = explosion.GetComponent<Explosion>();
+
+        explosion.transform.position = pos;
+        explosionLogic.StartExplosion(type);
     }
 
     //Player GameOver

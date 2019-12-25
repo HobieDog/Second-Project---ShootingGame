@@ -269,6 +269,9 @@ public class Player : MonoBehaviour
             life--;
             gameManager.UpdateLifeIcon(life);
 
+            //Explosion
+            gameManager.CallExplosion(transform.position, "P");
+
             //GameOver Check
             if(life == 0)
             {
